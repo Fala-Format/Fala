@@ -1,0 +1,67 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.10'
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace = "io.fala.android.client"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = "27.0.12077973"
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId = "io.fala.android.client"
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+    signingConfigs {
+        release {
+            storeFile file("fala.jks")
+            storePassword "falafala"
+            keyAlias "fala"
+            keyPassword "falafala"
+        }
+    }
+
+
+    signingConfigs {
+        release {
+            storeFile file("fala.jks")
+            storePassword "falafala"
+            keyAlias "fala"
+            keyPassword "falafala"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    dependencies {
+        implementation 'androidx.preference:preference-ktx:1.2.1'
+        implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0"
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+    }
+}
+
+flutter {
+    source = "../.."
+}

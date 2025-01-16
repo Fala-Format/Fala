@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="io.fala.android.client.SubscriptionWidgetConfigureActivity"
+    android:description="@string/app_widget_description"
+    android:initialKeyguardLayout="@layout/subscription_widget"
+    android:initialLayout="@layout/subscription_widget"
+    android:minWidth="320dp"
+    android:minHeight="80dp"
+    android:maxResizeWidth="320dp"
+    android:maxResizeHeight="80dp"
+    android:resizeMode="vertical"
+    android:targetCellWidth="4"
+    android:targetCellHeight="2"
+    android:widgetFeatures="reconfigurable"
+    android:updatePeriodMillis="86400000"
+    android:widgetCategory="home_screen" />

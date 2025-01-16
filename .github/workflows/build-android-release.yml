@@ -1,0 +1,73 @@
+name: Build and Release Flutter APK
+
+on:
+  push:
+    tags:
+      - 'v*'  # 当推送 v* 标签时触发
+
+jobs:
+  build:
+    name: Build and Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.1'  # 选择 Flutter 版本
+
+      # Step 3: Cache Flutter dependencies
+      - name: Cache Flutter packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Decode Keystore
+        run: echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 --decode > android/app/fala.jks
+
+      # Step 5: Build APK
+      - name: Build APK
+        run: flutter build apk --release
+
+      # Step 6: Extract release notes
+      - name: Extract Release Notes
+        id: release_notes
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          sed -n "/## ${VERSION}/,/## /p" release.md | sed '$d' > release_notes_output.md
+
+      # Step 7: Create Release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          body_path: release_notes_output.md
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 8: Upload APK
+      - name: Upload APK to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/app/outputs/flutter-apk/app-release.apk
+          asset_name: Fala-${{ github.ref_name }}.apk
+          asset_content_type: application/vnd.android.package-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
