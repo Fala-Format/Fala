@@ -10,11 +10,11 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> SubscriptionEntry {
-        .init(date: .now, type: "text", data: "Subscription".data(using: .utf8)!)
+        .init(date: .now, type: "text", data: "Subscription".data(using: .utf8)!, family: context.family)
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SubscriptionEntry {
-        .init(date: .now, type: "text", data: "Subscription".data(using: .utf8)!)
+        .init(date: .now, type: "text", data: "Subscription".data(using: .utf8)!, family: context.family)
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SubscriptionEntry> {
@@ -28,7 +28,7 @@ struct Provider: AppIntentTimelineProvider {
             }
             let result = await NetworkManager.shared.getData(url: source.url)
             if case .success(let data) = result {
-                entries.append(.init(date: .now, type: source.dataType, data: data))
+                entries.append(.init(date: .now, type: source.dataType, data: data, family: context.family))
             }
         }
 
@@ -40,6 +40,7 @@ struct SubscriptionEntry: TimelineEntry {
     let date: Date
     let type: String
     let data: Data
+    let family: WidgetFamily
 }
 
 struct SubscriptionWidgetEntryView : View {
@@ -53,6 +54,8 @@ struct SubscriptionWidgetEntryView : View {
                 Image(uiImage: UIImage(data: entry.data)!)
                     .resizable()
                     .aspectRatio(contentMode: ContentMode.fill)
+            } else if let model: WidgetCustomDataModel = loadJsonData(entry.data), entry.type == "custom" {
+                CustomDataWidgetView(model: model, family: entry.family)
             }
                 
         }
@@ -65,7 +68,7 @@ struct SubscriptionWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
             SubscriptionWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(.white, for: .widget)
         }
     }
 }

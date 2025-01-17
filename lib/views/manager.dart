@@ -24,13 +24,15 @@ class ManagerView extends StatefulWidget {
 }
 
 class _ManagerState extends State<ManagerView> {
-  final List<SubscriptionsLinkEntity> _selected = [];
+  List<SubscriptionsLinkEntity> _selected = [];
+  List<SubscriptionsLinkEntity> _allLinks = [];
   @override
   Widget build(BuildContext context) {
+    _allLinks = context.watch<SubscriptionProvider>().links;
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          children: context.watch<SubscriptionProvider>().links.map((link) => _selected.isNotEmpty ? ListTile(
+          children: _allLinks.map((link) => _selected.isNotEmpty ? ListTile(
             title: Text(link.url ?? ""),
             trailing: Icon(_selected.contains(link) ? Icons.check_box_sharp : Icons.check_box_outlined, color: _selected.contains(link) ? Colors.blue : Colors.grey),
             onTap: () {
@@ -108,7 +110,7 @@ class _ManagerState extends State<ManagerView> {
           Navigator.pop(context);
         },
       ) : Container(
-        width: 150,
+        width: 200,
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -178,6 +180,18 @@ class _ManagerState extends State<ManagerView> {
                 }
                 setState(() {
                   _selected.clear();
+                });
+              },
+            ),
+            HapticFeedbackButton(
+              child: Icon(_selected.length == _allLinks.length ? Icons.check_box_outlined : Icons.indeterminate_check_box_outlined, color: Colors.blue),
+              onPressed: () {
+                setState(() {
+                  if(_selected.length != _allLinks.length) {
+                    _selected = List.from(_allLinks);
+                  } else{
+                    _selected.clear();
+                  }
                 });
               },
             )
