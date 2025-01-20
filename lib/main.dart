@@ -1,6 +1,5 @@
-import 'package:fala/extension/colors.dart';
 import 'package:fala/provider/subscription_provider.dart';
-import 'package:fala/views/home.dart';
+import 'package:fala/views/initialization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +28,6 @@ class Application extends StatelessWidget {
     ),
     debugShowCheckedModeBanner: false,
     navigatorKey: navigatorKey,
-    home: HomeView(),
+    home: InitializationView(),
   );
 }

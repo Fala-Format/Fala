@@ -22,6 +22,7 @@ struct Provider: AppIntentTimelineProvider {
 
         if let sources = configuration.subscription?.source, !sources.isEmpty {
             var source = sources.first!
+            
             let size = context.family == .systemSmall ? "widget_small" : context.family == .systemMedium ? "widget_middle" : "widget_large"
             if sources.filter({ $0.type == size }).first != nil {
                 source = sources.filter { $0.type == size }.first!
@@ -57,8 +58,14 @@ struct SubscriptionWidgetEntryView : View {
             } else if let model: WidgetCustomDataModel = loadJsonData(entry.data), entry.type == "custom" {
                 CustomDataWidgetView(model: model, family: entry.family)
             }
-                
         }
+    }
+}
+
+struct SubSubscriptionBackgroupView: View {
+    @Environment(\.colorScheme) var colorScheme
+    var body: some View {
+        colorScheme == .dark ? Color.black : .white
     }
 }
 
@@ -68,7 +75,9 @@ struct SubscriptionWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
             SubscriptionWidgetEntryView(entry: entry)
-                .containerBackground(.white, for: .widget)
+                .containerBackground(for: .widget) {
+                    SubSubscriptionBackgroupView()
+                }
         }
     }
 }

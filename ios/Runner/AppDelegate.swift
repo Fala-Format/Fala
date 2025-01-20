@@ -7,7 +7,6 @@ import UIKit
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        loadDataFromICloud()
         GeneratedPluginRegistrant.register(with: self)
         let controller = window?.rootViewController as! FlutterViewController
         let methodChannel = FlutterMethodChannel(name: "io.fala.ios.client/native",
@@ -24,9 +23,17 @@ import UIKit
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
+    override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        loadDataFromICloud()
+        return super.application(application, willFinishLaunchingWithOptions: launchOptions)
+    }
+    
     func loadDataFromICloud() {
         let defaults = NSUbiquitousKeyValueStore.default
         let userDefault = UserDefaults(suiteName: "group.io.fala.ios.client")
+        userDefault?.register(defaults: [
+            "syncICloud": true
+        ])
         let syncICloud = userDefault?.bool(forKey: "syncICloud")
         if syncICloud == false {
             return

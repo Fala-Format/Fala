@@ -37,17 +37,11 @@ struct CustomDataWidgetView: View {
                                         HStack {
                                             Spacer()
                                             Spacer()
-                                            let c = Text(model.data[index].value)
+                                            Text(model.data[index].value)
                                                 .font(.system(size: 20, weight: .bold))
-                                                .foregroundColor(.black)
+                                                .minimumScaleFactor(0.5)
+                                                .lineLimit(1)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                            
-                                            if (model.data[index].value.count > 13){
-                                                c.fixedSize(horizontal: true, vertical: false)
-                                                    .position(x:width/2, y:13)
-                                            } else {
-                                                c
-                                            }
                                         }
                                         Spacer()
                                     }
