@@ -32,7 +32,6 @@ class _HomeState extends State<HomeView> {
 
   @override
   void initState() {
-    Dio().get("https://www.baidu.com");
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkVersion();
     });

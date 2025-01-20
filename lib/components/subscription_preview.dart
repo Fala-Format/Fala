@@ -4,8 +4,10 @@ import 'dart:typed_data';
 
 import 'package:fala/captureWebview/WebView.dart';
 import 'package:fala/captureWebview/controller.dart';
+import 'package:fala/components/custom_data_view.dart';
 import 'package:fala/components/haptic_feedback_button.dart';
 import 'package:fala/extension/colors.dart';
+import 'package:fala/mode/custom_data_entity.dart';
 import 'package:fala/mode/subscription_entity.dart';
 import 'package:fala/network/network.dart';
 import 'package:fala/provider/subscription_provider.dart';
@@ -90,6 +92,17 @@ class _SubscriptionState extends State<SubscriptionPreview> with AutomaticKeepAl
                 maxHeight: 200,
               ),
               child: Text(utf8.decode(data)),
+            ), context: context);
+        break;
+      case 'custom':
+        source.data = await ScreenshotController().captureFromWidget(
+            Container(
+              alignment: Alignment.center,
+              constraints: BoxConstraints(
+                minHeight: 50,
+                maxHeight: 150,
+              ),
+              child: CustomDataView(data),
             ), context: context);
         break;
       default:
