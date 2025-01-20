@@ -23,6 +23,12 @@ class CustomDataView extends StatelessWidget {
         isError = true;
       }
     }
+    bool hasChart = entity?.chart?.isNotEmpty == true;
+    int dataCount = entity?.data?.length ?? 0;
+    if(hasChart) {
+      dataCount = dataCount > 2 ? 2 : dataCount;
+    }
+
     return Padding(
       padding: EdgeInsets.all(10),
       child: Container(
@@ -38,33 +44,43 @@ class CustomDataView extends StatelessWidget {
             child: Text("数据格式错误", style: TextStyle(color: Colors.red)))
             : Row(
           children: [
-            if(entity?.data?.isEmpty != true)
+            if(entity?.data?.isNotEmpty == true)
               Expanded(
+                  flex: 1,
                   child: Padding(
                     padding: EdgeInsets.only(left: 15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 15,
-                      children: entity!.data!.sublist(0, 2).map((data) =>
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(data.title!,
-                                  style: TextStyle(color: mainColor, fontWeight: FontWeight.bold)
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.only(left: 20),
-                                  child: AutoSizeText(data.value!,
-                                    style: TextStyle(color: isDarkMode(context) ? Colors.white : Colors.black, fontWeight: FontWeight.bold))
-                              )
-                            ],
-                          )).toList(),
-                    ),
-                  )
+                    child: GridView.builder(
+                      scrollDirection: Axis.horizontal,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 0.0,
+                        mainAxisSpacing: 5.0,
+                        childAspectRatio: 0.33,
+                      ),
+                      itemCount: dataCount,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(entity!.data![index].title!,
+                                style: TextStyle(color: mainColor, fontWeight: FontWeight.bold)
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(left: 20),
+                                child: AutoSizeText(entity.data![index].value!,
+                                    style: TextStyle(color: isDarkMode(context) ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
+                                  maxLines: 1,
+                                )
+                            )
+                          ],
+                        );
+                      },
+                    )
+                  ),
               ),
             Expanded(
-                child: AreaChartView(entity!.chart!, hint: entity.chartHint)
+                flex: hasChart ? 1 : 0,
+                child: hasChart ? AreaChartView(entity!.chart!, hint: entity.chartHint) : SizedBox()
             ),
           ],
         ),

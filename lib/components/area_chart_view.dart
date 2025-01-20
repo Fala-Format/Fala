@@ -36,7 +36,7 @@ class AreaChartView extends StatelessWidget {
             if(chart.title?.isNotEmpty == true) {
               return Positioned(
                   left: points[index].dx,
-                  bottom: -40,
+                  bottom: 0,
                   child: Text(chart.title!, style: TextStyle(color: Colors.grey.withAlpha(125), fontSize: 10),)
               );
             } else {
