@@ -125,13 +125,14 @@ class _SubscriptionState extends State<SubscriptionPreview> with AutomaticKeepAl
       );
     }
     return Stack(
+      clipBehavior: Clip.none,
       children: [
         CaptureWebView(_captureWebViewController),
         Container(
           color: Colors.white,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white,
@@ -204,15 +205,19 @@ class _SubscriptionState extends State<SubscriptionPreview> with AutomaticKeepAl
             ),
           ),
         ),
-        Positioned(
-          left: 25,
-          top: 0,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            color: Colors.white,
-            child: Text(widget.entity.title ?? ""),
-          ),
-        )
+        if(widget.entity.title?.isNotEmpty == true)
+          Positioned(
+            left: 25,
+            top: -10,
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white.withAlpha(220),
+              ),
+              child: Text(widget.entity.title ?? ""),
+            ),
+          )
       ],
     );
   }

@@ -15,37 +15,55 @@ struct CustomDataWidgetView: View {
         ZStack {
             VStack {
                 Text(model.title)
-                    .font(.system(size: 9))
+                    .font(.system(size: 8))
                     .foregroundColor(.gray.opacity(0.5))
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                Spacer()
+            }
+            VStack {
+                Text(model.tag ?? "")
+                    .font(.system(size: 8))
+                    .foregroundColor(.gray.opacity(0.5))
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Spacer()
             }
             GeometryReader { geometry in
                 let width = geometry.size.width
                 let height = geometry.size.height
                 VStack {
+                    if (family == .systemSmall) {
+                        Spacer()
+                    }
                     HStack {
                         LazyHGrid(rows: Array(repeating: GridItem(.flexible(), spacing: 0), count: 2)) {
                             ForEach(0..<model.data.count) { index in
                                 if(model.chart == nil || index < 2 || (family == .systemLarge && index < 4)) {
                                     VStack(spacing: 3) {
-                                        Spacer()
-                                        Text(model.data[index].title)
-                                            .font(.system(size: 12, weight: .bold))
-                                            .foregroundColor(mainColor)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        HStack {
+                                            Text(model.data[index].title)
+                                                .font(.system(size: 12, weight: .bold))
+                                                .foregroundColor(mainColor)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                            Text(model.data[index].title_sub ?? "")
+                                                .font(.system(size: 8))
+                                                .foregroundColor(.gray.opacity(0.5))
+                                                .frame(alignment: .trailing)
+                                            Spacer()
+                                        }
                                         HStack {
                                             Spacer()
-                                            Spacer()
                                             Text(model.data[index].value)
-                                                .font(.system(size: 20, weight: .bold))
-                                                .minimumScaleFactor(0.5)
+                                                .font(.system(size: 28, weight: .bold))
+                                                .minimumScaleFactor(0.4)
                                                 .lineLimit(1)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                            if (family != .systemSmall) {
+                                                Spacer()
+                                            }
                                         }
-                                        Spacer()
+                                        .frame(height:26, alignment: .bottom)
                                     }
-                                    .frame(width: (family == .systemLarge || (model.data.count > 1 && family != .systemSmall)) ? width / 2 : nil)
+                                    .frame(width: (family == .systemLarge || (model.data.count > 1 && family != .systemSmall)) ? width / 2 : width)
                                 }
                             }
                         }

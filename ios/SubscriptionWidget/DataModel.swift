@@ -21,10 +21,11 @@ struct WidgetCustomDataModel: Codable {
     let data: [WidgetShowDataModel]
     let chart: [AreaChartData]?
     let chart_hint: CGFloat?
-    let last_time: String?
+    let tag: String?
 }
 
 struct WidgetShowDataModel: Codable {
     let title: String
     let value: String
+    let title_sub: String?
 }

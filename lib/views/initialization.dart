@@ -58,6 +58,7 @@ class _InitializationState extends State<InitializationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Column(

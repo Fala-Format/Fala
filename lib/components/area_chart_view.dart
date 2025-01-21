@@ -17,7 +17,7 @@ class AreaChartView extends StatelessWidget {
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
       // 获取父组件的宽高
       double width = constraints.maxWidth;
-      double height = constraints.maxHeight;
+      double height = constraints.maxHeight - 20;
       List<double> data = chartDatas.map((chart) => cubeRoot(chart.value ?? 0)).toList();
       double maxValue = data.max;
       double minValue = data.min;
@@ -25,25 +25,29 @@ class AreaChartView extends StatelessWidget {
       List<Offset> points = data.mapIndexed((index, value){
         return Offset(width / (data.length - 1) * index, height - (value - minValue) / (maxValue - minValue) * height);
       }).toList();
-      return Stack(
-        clipBehavior: Clip.none,
-        children: [
-          CustomPaint(
-            size: Size(width, height), // 设置绘制区域大小
-            painter: AreaChartPainter(points, hint: height - (chartHint - minValue) / (maxValue - minValue) * height),
-          ),
-          ...chartDatas.mapIndexed((index, chart) {
-            if(chart.title?.isNotEmpty == true) {
-              return Positioned(
-                  left: points[index].dx,
-                  bottom: 0,
-                  child: Text(chart.title!, style: TextStyle(color: Colors.grey.withAlpha(125), fontSize: 10),)
-              );
-            } else {
-              return SizedBox();
-            }
-          })
-        ],
+      return Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.only(bottom: 20),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            CustomPaint(
+              size: Size(width, height), // 设置绘制区域大小
+              painter: AreaChartPainter(points, hint: height - (chartHint - minValue) / (maxValue - minValue) * height),
+            ),
+            ...chartDatas.mapIndexed((index, chart) {
+              if(chart.title?.isNotEmpty == true) {
+                return Positioned(
+                    left: points[index].dx,
+                    bottom: -20,
+                    child: Text(chart.title!, style: TextStyle(color: Colors.grey.withAlpha(125), fontSize: 10))
+                );
+              } else {
+                return SizedBox();
+              }
+            })
+          ],
+        ),
       );
     });
   }

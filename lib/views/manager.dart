@@ -30,6 +30,7 @@ class _ManagerState extends State<ManagerView> {
   Widget build(BuildContext context) {
     _allLinks = context.watch<SubscriptionProvider>().links;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView(
           children: _allLinks.map((link) => _selected.isNotEmpty ? ListTile(

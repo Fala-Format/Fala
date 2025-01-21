@@ -87,6 +87,7 @@ class _ContentState extends State<ContentView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
           child: RefreshIndicator(
             onRefresh: update,

@@ -50,8 +50,12 @@ class _HomeState extends State<HomeView> {
                         var subscription = context
                             .watch<SubscriptionProvider>()
                             .subscriptions[index];
-                        return SubscriptionPreview(
-                            subscription, key: ValueKey(index));
+                        return Padding(
+                          key: ValueKey(index),
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: SubscriptionPreview(
+                              subscription),
+                        );
                       },
                       itemCount: context
                           .watch<SubscriptionProvider>()

@@ -95,9 +95,11 @@ class SubscriptionProvider with ChangeNotifier {
       newIndex -= 1;
     }
     var list = subscriptions;
-    list[oldIndex].index = newIndex;
-    list[newIndex].index = oldIndex;
-    Store.setSubscriptionLinks(links);
+    final movedItem = list.removeAt(oldIndex);
+    list.insert(newIndex, movedItem);
+    for (int i = 0; i < list.length; i++) {
+      list[i].index = i;
+    }
     notifyListeners();
   }
 
