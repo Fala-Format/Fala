@@ -29,7 +29,6 @@ struct CustomDataWidgetView: View {
             }
             GeometryReader { geometry in
                 let width = geometry.size.width
-                let height = geometry.size.height
                 VStack {
                     if (family == .systemSmall) {
                         Spacer()
