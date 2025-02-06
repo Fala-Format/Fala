@@ -8,3 +8,6 @@
 
 ## v1.1.1
 - Android widgets supported custom data
+
+## v1.1.2
+- update custom data view
