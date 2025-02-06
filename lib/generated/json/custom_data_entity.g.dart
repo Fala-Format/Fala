@@ -58,7 +58,7 @@ CustomDataData $CustomDataDataFromJson(Map<String, dynamic> json) {
   if (title != null) {
     customDataData.title = title;
   }
-  final String? subTitle = jsonConvert.convert<String>(json['sub_title']);
+  final String? subTitle = jsonConvert.convert<String>(json['title_sub']);
   if (subTitle != null) {
     customDataData.subTitle = subTitle;
   }
@@ -72,7 +72,7 @@ CustomDataData $CustomDataDataFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> $CustomDataDataToJson(CustomDataData entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['title'] = entity.title;
-  data['sub_title'] = entity.subTitle;
+  data['title_sub'] = entity.subTitle;
   data['value'] = entity.value;
   return data;
 }
