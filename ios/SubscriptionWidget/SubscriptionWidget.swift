@@ -65,7 +65,7 @@ struct SubscriptionWidgetEntryView : View {
 struct SubSubscriptionBackgroupView: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
-        colorScheme == .dark ? Color.black : .white
+        colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : .white
     }
 }
 

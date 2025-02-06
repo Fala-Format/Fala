@@ -16,14 +16,14 @@ struct CustomDataWidgetView: View {
             VStack {
                 Text(model.title)
                     .font(.system(size: 8))
-                    .foregroundColor(.gray.opacity(0.5))
+                    .foregroundColor(.gray.opacity(0.9))
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 Spacer()
             }
             VStack {
                 Text(model.tag ?? "")
                     .font(.system(size: 8))
-                    .foregroundColor(.gray.opacity(0.5))
+                    .foregroundColor(.gray.opacity(0.9))
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Spacer()
             }
@@ -45,8 +45,8 @@ struct CustomDataWidgetView: View {
                                                 .foregroundColor(mainColor)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
                                             Text(model.data[index].title_sub ?? "")
-                                                .font(.system(size: 8))
-                                                .foregroundColor(.gray.opacity(0.5))
+                                                .font(.system(size: 12))
+                                                .foregroundColor(.gray.opacity(0.9))
                                                 .frame(alignment: .trailing)
                                             Spacer()
                                         }

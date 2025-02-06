@@ -34,58 +34,76 @@ class CustomDataView extends StatelessWidget {
           border: Border.all(
               color: isError ? Colors.red : Colors.transparent),
           borderRadius: BorderRadius.circular(10),
-          color: isDarkMode(context) ? Colors.black : Colors.white
+          // 272729
+          color: isDarkMode(context) ? Color(0xFF28282A) : Colors.white
       ),
       padding: EdgeInsets.all(5),
       child: isError
           ? Center(
           child: Text("数据格式错误", style: TextStyle(color: Colors.red)))
-          : Row(
-        children: [
-          if(entity?.data?.isNotEmpty == true)
-            Expanded(
-              flex: 1,
-              child: Padding(
-                  padding: EdgeInsets.only(left: 15),
+          : Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          children: [
+            if(entity?.data?.isNotEmpty == true)
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20),
                   child: GridView.builder(
                     scrollDirection: Axis.horizontal,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 0.0,
-                      mainAxisSpacing: 5.0,
-                      childAspectRatio: 0.33,
+                      mainAxisSpacing: 10.0,
+                      childAspectRatio: 0.55,
                     ),
                     itemCount: dataCount,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(entity!.data![index].title!,
-                              style: TextStyle(color: mainColor, fontWeight: FontWeight.bold)
-                          ),
-                          Container(
+                    itemBuilder: (context, index) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(child: Text(entity!.data![index].title!,
+                                style: TextStyle(color: mainColor, fontWeight: FontWeight.bold)
+                            )),
+                            Expanded(child: Text(entity.data![index].subTitle!,
+                              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.right,
+                            ))
+                          ],
+                        ),
+                        Expanded(
+                          child: Container(
                             constraints: BoxConstraints(
-                                minWidth: double.infinity
+                                minHeight: double.infinity
                             ),
-                            padding: EdgeInsets.only(right: 5),
                             alignment: Alignment.center,
-                            child: AutoSizeText(entity.data![index].value!,
-                              style: TextStyle(color: isDarkMode(context) ? Colors.white : Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
-                              maxLines: 1,
+                            child: Container(
+                              constraints: BoxConstraints(
+                                  minWidth: double.infinity
+                              ),
+                              alignment: Alignment.centerRight,
+                              child: AutoSizeText(entity.data![index].value!,
+                                style: TextStyle(color: isDarkMode(context) ? Colors.white : Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                                maxLines: 1,
+                                textAlign: TextAlign.right,
+                              ),
                             ),
-                          )
-                        ],
-                      );
-                    },
-                  )
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
+            Expanded(
+                flex: hasChart ? 3 : 0,
+                child: hasChart ? AreaChartView(entity!.chart!, hint: entity.chartHint) : SizedBox()
             ),
-          Expanded(
-              flex: hasChart ? 1 : 0,
-              child: hasChart ? AreaChartView(entity!.chart!, hint: entity.chartHint) : SizedBox()
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

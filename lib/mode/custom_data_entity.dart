@@ -27,6 +27,8 @@ class CustomDataEntity {
 class CustomDataData {
 	String? title;
 	String? value;
+	@JSONField(name: "sub_title")
+	String? subTitle;
 
 	CustomDataData();
 
