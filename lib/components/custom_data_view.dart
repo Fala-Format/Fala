@@ -68,10 +68,11 @@ class CustomDataView extends StatelessWidget {
                             Expanded(child: Text(entity!.data![index].title!,
                                 style: TextStyle(color: mainColor, fontWeight: FontWeight.bold)
                             )),
-                            Expanded(child: Text(entity.data![index].subTitle!,
-                              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.right,
-                            ))
+                            if(entity.data![index].subTitle?.isNotEmpty == true)
+                              Expanded(child: Text(entity.data![index].subTitle!,
+                                style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.right,
+                              ))
                           ],
                         ),
                         Expanded(

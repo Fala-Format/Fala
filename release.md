@@ -11,3 +11,6 @@
 
 ## v1.1.2
 - update custom data view
+
+## v1.1.3
+- Fixed some minor issues.
