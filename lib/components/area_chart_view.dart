@@ -17,7 +17,7 @@ class AreaChartView extends StatelessWidget {
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
       // 获取父组件的宽高
       double width = constraints.maxWidth;
-      double height = constraints.maxHeight - 20;
+      double height = constraints.maxHeight - 60;
       List<double> data = chartDatas.map((chart) => cubeRoot(chart.value ?? 0)).toList();
       double maxValue = data.max;
       double minValue = data.min;
@@ -39,7 +39,7 @@ class AreaChartView extends StatelessWidget {
               if(chart.title?.isNotEmpty == true) {
                 return Positioned(
                     left: points[index].dx,
-                    bottom: -20,
+                    bottom: -35,
                     child: Text(chart.title!, style: TextStyle(color: Colors.grey.withAlpha(125), fontSize: 10))
                 );
               } else {

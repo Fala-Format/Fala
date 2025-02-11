@@ -82,12 +82,13 @@ class CustomDataView extends StatelessWidget {
                             ),
                             alignment: Alignment.center,
                             child: Container(
+                              padding: EdgeInsets.only(bottom: 15, right: 5),
                               constraints: BoxConstraints(
                                   minWidth: double.infinity
                               ),
                               alignment: Alignment.centerRight,
                               child: AutoSizeText(entity.data![index].value!,
-                                style: TextStyle(color: isDarkMode(context) ? Colors.white : Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                                style: TextStyle(color: isDarkMode(context) ? Colors.white : Colors.black, fontWeight: FontWeight.w900, fontSize: 20),
                                 maxLines: 1,
                                 textAlign: TextAlign.right,
                               ),

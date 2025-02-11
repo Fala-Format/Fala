@@ -14,3 +14,6 @@
 
 ## v1.1.3
 - Fixed some minor issues.
+
+## v1.1.4
+- Fixed some minor issues.
