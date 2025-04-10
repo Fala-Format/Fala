@@ -56,7 +56,9 @@ class _ContentState extends State<ContentView> {
         Duration(minutes: widget.entity.refreshInterval), (_) => update());
     switch (source.dataType) {
       case 'image':
-        content = Image.memory(data);
+        content = InteractiveViewer(
+            child: Image.memory(data)
+        );
         break;
       case 'html':
         content = WebViewWidget(controller: WebViewController()

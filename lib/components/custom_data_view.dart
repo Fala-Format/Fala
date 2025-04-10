@@ -56,26 +56,32 @@ class CustomDataView extends StatelessWidget {
                       crossAxisCount: 2,
                       crossAxisSpacing: 0.0,
                       mainAxisSpacing: 10.0,
-                      childAspectRatio: 0.55,
+                      childAspectRatio: returnChildAspectRatio(hasChart),
                     ),
                     itemCount: dataCount,
-                    itemBuilder: (context, index) => Column(
+                    itemBuilder: (context, index) => Column( // 一个小格子
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
+                        Row(// 标题副标题
                           children: [
                             Expanded(child: Text(entity!.data![index].title!,
-                                style: TextStyle(color: mainColor, fontWeight: FontWeight.bold)
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: mainColor,fontSize: 14, fontWeight: FontWeight.bold)
                             )),
                             if(entity.data![index].subTitle?.isNotEmpty == true)
-                              Expanded(child: Text(entity.data![index].subTitle!,
-                                style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                              Expanded(child: AutoSizeText(entity.data![index].subTitle!,
+                                style: TextStyle(color: Colors.grey,fontSize: 12, fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.right,
+                                overflow: TextOverflow.ellipsis,
+                                minFontSize: 6,
+                                maxLines: 1,
+                                softWrap: false,
                               ))
                           ],
                         ),
-                        Expanded(
+                        Expanded(  // 值
                           child: Container(
                             constraints: BoxConstraints(
                                 minHeight: double.infinity
@@ -100,10 +106,11 @@ class CustomDataView extends StatelessWidget {
                   ),
                 ),
               ),
-            Expanded(
-                flex: hasChart ? 3 : 0,
-                child: hasChart ? AreaChartView(entity!.chart!, hint: entity.chartHint) : SizedBox()
-            ),
+            if(hasChart)
+              Expanded(
+                  flex: 3,
+                  child: AreaChartView(entity!.chart!, hint: entity.chartHint)
+              ),
           ],
         ),
       ),
@@ -113,4 +120,8 @@ class CustomDataView extends StatelessWidget {
   bool isDarkMode(BuildContext context) {
     return MediaQuery.of(context).platformBrightness == Brightness.dark;
   }
+}
+
+double returnChildAspectRatio(bool hasChart) {
+  return hasChart ? 0.55 : 0.425;
 }

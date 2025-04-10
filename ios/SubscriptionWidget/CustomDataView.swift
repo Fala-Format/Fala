@@ -37,16 +37,20 @@ struct CustomDataWidgetView: View {
                         LazyHGrid(rows: Array(repeating: GridItem(.flexible(), spacing: 0), count: 2)) {
                             ForEach(0..<model.data.count) { index in
                                 if(model.chart == nil || index < 2 || (family == .systemLarge && index < 4)) {
-                                    VStack(spacing: 3) {
+                                    VStack(spacing: 1) {
                                         HStack {
                                             Text(model.data[index].title)
                                                 .font(.system(size: 12, weight: .bold))
                                                 .foregroundColor(mainColor)
+                                                .lineLimit(1)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                                .layoutPriority(1)
                                             Text(model.data[index].title_sub ?? "")
                                                 .font(.system(size: 12))
+                                                .lineLimit(1)
                                                 .foregroundColor(.gray.opacity(0.9))
                                                 .frame(alignment: .trailing)
+                                                .layoutPriority(10)
                                             Spacer()
                                         }
                                         HStack {

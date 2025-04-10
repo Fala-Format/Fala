@@ -46,3 +46,4 @@ app.*.map.json
 pubspec.lock
 Podfile.lock
 ios/build
+/android/app/.cxx
